@@ -1,0 +1,39 @@
+class Solution {
+public:
+    int limi[1000000];
+    int haha(int num){
+        //cout<<num<<"\n";
+        if(limi[num]!=-1){
+            return limi[num];
+        }
+        if(num%2==0){
+            limi[num] = haha(num/2)+1;
+        }else{
+            limi[num] = haha(num*3 + 1)+1;
+        }
+        return limi[num];
+    }
+    
+    int getKth(int lo, int hi, int k) {
+       limi[0]=limi[1]= 0;
+        for(int i=2;i<1000000;i++){
+            limi[i]=-1;
+        }
+       set<pair <int,int> > set1;
+        for(int i=lo;i<=hi;i++){
+            int xx = haha(i);
+            pair p1 = make_pair(xx, i);
+            // putting into the set
+            set1.insert(p1);
+        }
+        int i=0;
+        for(auto a: set1){
+            cout<<a.second<<" "<<a.first<<"\n";
+            i++;
+            if(k==i){
+                return a.second;
+            }
+        }
+        return -1;
+    }
+};
