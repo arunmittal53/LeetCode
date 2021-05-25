@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int minSwapsCouples(vector<int>& row) {
+        // x & x1 is a couple
+        // y & y1 is a couple
+        int ans=0, i;
+        int n = row.size();
+        vector<int> rever(n); // storing reverse indexes
+        for(i=0;i<n;i++){
+            rever[row[i]] = i;
+        }
+        for(i=0;i<n-1;i+=2){
+            int x = row[i];
+            int y = row[i+1];
+            if(x/2 == y/2){ // couple is already at adjustent position
+                continue;
+            }
+            
+            int data_x1 = x%2?x-1:x+1;
+            int place_x1 = rever[data_x1];
+            int place_y1 = place_x1%2?place_x1-1:place_x1+1;
+            
+            rever[y] = rever[row[place_x1]];
+            row[place_x1] = y;
+            
+            ans++;
+        }
+        return ans;
+    }
+};
